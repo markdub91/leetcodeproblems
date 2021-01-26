@@ -34,35 +34,43 @@ The substring "BBBB" has the longest repeating letters, which is 4.
 */
 
 var characterReplacement = function(s, k) {
-  if (k >= (s.length - 1)) {
+  if (s.length === 0 || s.length === 1 || k >= (s.length - 1)) {
     return s.length;
   }
 
-  let longestString = 0;
-  for (let i = 0; i < s.length; i++) {
-    if (longestString >= (s.length - 1 - i)) {
-      return longestString;
+  let slidingWindow = (window) => {
+    let windowObj = {};
+    let windowArray = window.split('');
+    windowArray.forEach(el => {
+      if (windowObj[el]) {
+        windowObj[el]++;
+      } else {
+        windowObj[el] = 1;
+      }
+    })
+    let windowVals = Object.values(windowObj).sort((a, b) => (a - b));
+    if (windowVals.length === 1 || (window.length - windowVals[windowVals.length - 1] <= k)) {
+      return true;
+    } else {
+      return false;
     }
-    let remainingChanges = k;
-    let currentStringLength = 1;
-    for (let j = (i + 1); j < s.length; j++) {
-      if (s[j] === s[i]) {
-        currentStringLength++;
-        if (currentStringLength > longestString) {
-          longestString = currentStringLength;
-        }
-      } else if (remainingChanges > 0) {
-        currentStringLength++;
-        remainingChanges--;
-        if (currentStringLength > longestString) {
-          longestString = currentStringLength;
+  }
+  // define window size
+  for (let i = s.length; i >= 0; i--) {
+    // define window start index
+    for (let j = 0; j < s.length; j++) {
+      // check if start index plus window size will fit within string, else continue
+      if ((j + i) <= s.length) {
+        let testSlice = s.slice(j, j + i);
+        if (slidingWindow(testSlice)) {
+          return i;
         }
       } else {
-        break;
+        continue;
       }
     }
   }
-  return longestString;
+
 };
 
 console.log(characterReplacement('ABAB', 2));

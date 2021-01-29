@@ -19,22 +19,25 @@ var isAnagram = function(s, t) {
   if (s.length !== t.length) {
     return false;
   }
-  sArray = s.split('');
-  tArray = t.split('');
-  for (let i = 0; i < sArray.length; i++) {
-    let char = sArray[i];
-    let tIndex = tArray.indexOf(char);
-    if (tIndex > -1) {
-      tArray.splice(tIndex, 1);
-    } else {
-      return false;
-    }
-  }
-  if (tArray.length === 0) {
-    return true;
-  } else {
-    return false;
-  }
+  sArray = s.split('').sort();
+  tArray = t.split('').sort();
+  return (JSON.stringify(sArray) === JSON.stringify(tArray));
+  // sArray = s.split('');
+  // tArray = t.split('');
+  // for (let i = 0; i < sArray.length; i++) {
+  //   let char = sArray[i];
+  //   let tIndex = tArray.indexOf(char);
+  //   if (tIndex > -1) {
+  //     tArray.splice(tIndex, 1);
+  //   } else {
+  //     return false;
+  //   }
+  // }
+  // if (tArray.length === 0) {
+  //   return true;
+  // } else {
+  //   return false;
+  // }
 };
 
 console.log(isAnagram('anagram', 'nagaram'));

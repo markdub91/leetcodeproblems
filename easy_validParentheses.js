@@ -36,5 +36,26 @@ s consists of parentheses only '()[]{}'.
 */
 
 var isValid = function(s) {
-
+  if (s.length % 2 !== 0) {
+    return false;
+  }
+  let sArray = s.split('');
+  let oldLength = 0;
+  while (sArray.length > 0) {
+    oldLength = sArray.length;
+    for (let i = 0; i < sArray.length; i++) {
+      if ((sArray[i] === '(' && sArray[i + 1] === ')') || (sArray[i] === '[' && sArray[i + 1] === ']') || (sArray[i] === '{' && sArray[i + 1] === '}')) {
+        sArray.splice(i, 2);
+      }
+    }
+    let newLength = sArray.length;
+    if (oldLength === newLength && newLength !== 0) {
+      return false;
+    }
+  }
+  return true;
 };
+
+console.log(isValid('()'));
+console.log(isValid('()[]{}'));
+console.log(isValid('([)]'));

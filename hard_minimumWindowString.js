@@ -24,6 +24,42 @@ s and t consist of English letters.
 Follow up: Could you find an algorithm that runs in O(n) time?
 */
 
-var minWindow = function(s, t) {
+var minWindow = function(s, k) {
+  // if (s.length < 1 || k.length > 105) return '';
 
+  let validCheck = (subString) => {
+    let subStringArray = subString.split('');
+    for (let i = 0; i < k.length; i++) {
+      let subStringArrayIndexOf = subStringArray.indexOf(k[i])
+      if (subStringArrayIndexOf === -1) {
+        return false;
+      }
+      subStringArray.splice(subStringArrayIndexOf, 1);
+    }
+    return true;
+  }
+
+  let minWindow;
+  let left = 0;
+  let right = 1;
+
+  while (right <= s.length + 1) {
+    let section = s.slice(left, right);
+    if (right <= left) {
+      right++;
+    } else if (validCheck(section)) {
+      if (minWindow === undefined || section.length < minWindow.length) {
+        minWindow = section;
+      }
+      left++
+    } else {
+      right++;
+    }
+  }
+  if (minWindow === undefined) return '';
+  return minWindow;
 };
+
+console.log(minWindow('', ''));
+console.log(minWindow('ADOBECODEBANC', 'ABC'));
+console.log(minWindow('a', 'a'));

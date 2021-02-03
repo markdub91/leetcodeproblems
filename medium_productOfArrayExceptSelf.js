@@ -13,13 +13,32 @@ Follow up:
 Could you solve it with constant space complexity? (The output array does not count as extra space for the purpose of space complexity analysis.)
 */
 var productExceptSelf = function(nums) {
-  return nums.map((el, idx) => (nums.reduce((accumulator, val, index) => {
-    if (idx !== index) {
-      return accumulator * val
+  let leftProduct = new Array(nums.length);
+  leftProduct[0] = 1;
+  let rightProduct = new Array(nums.length);
+  rightProduct[nums.length - 1] = 1;
+  let j = nums.length - 1;
+
+  for (let i = 0; i < nums.length; i++) {
+    if (i === 0) {
+      leftProduct[i] === 1;
+      rightProduct[j - i] === 1;
     } else {
-      return accumulator * 1
+      leftProduct[i] = leftProduct[i - 1] * nums[i - 1];
+      rightProduct[j - i] = rightProduct[j - i + 1] * nums[j - i + 1];
     }
-  }, 1)))
+  }
+  // console.log(leftProduct);
+  // console.log(rightProduct);
+  return nums.map((el, idx) => (leftProduct[idx] * rightProduct[idx]));
+
+  // return nums.map((el, idx) => (nums.reduce((accumulator, val, index) => {
+  //   if (idx !== index) {
+  //     return accumulator * val
+  //   } else {
+  //     return accumulator * 1
+  //   }
+  // }, 1)))
 };
 
-console.log(productExceptSelf([1,2,3,4]));
+console.log(productExceptSelf([1,2,3,4])); // [24, 12, 8, 6]

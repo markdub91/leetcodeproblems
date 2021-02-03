@@ -34,7 +34,7 @@ var countSubstrings = function(s) {
     return true;
   }
   let count = 0;
-  let substrings = [];
+  // let substrings = [];
 
   for (let i = 0; i < s.length; i++) {
     let relIndex = 0;
@@ -43,7 +43,7 @@ var countSubstrings = function(s) {
       section = s.slice(i - relIndex, i + relIndex + 1);
       if (palindromeCheck(section) && section !== '') {
         count++;
-        substrings.push(section);
+        // substrings.push(section);
         relIndex++;
       } else {
         isPalindrome = false;
@@ -56,14 +56,14 @@ var countSubstrings = function(s) {
       section = s.slice(i - relIndex, i + relIndex + 2);
       if (palindromeCheck(section) && section !== '') {
         count++;
-        substrings.push(section);
+        // substrings.push(section);
         relIndex++;
       } else {
         isPalindrome = false;
       }
     }
   }
-  console.log(substrings);
+  // console.log(substrings);
   return count;
 };
 
